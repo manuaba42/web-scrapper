@@ -27,6 +27,20 @@ ActionChains(driver).click_and_hold(slider1).pause(1).move_by_offset(-50,0).rele
 ActionChains(driver).click_and_hold(slider2).pause(1).move_by_offset(-75,0).release().perform()
 
 time.sleep(5)
+
+reached_page_end = False
+last_height = driver.execute_script("return document.body.scrollHeight")
+
+while not reached_page_end:
+    driver.execute_script("window.scrollBy(0, 4000);")
+
+    time.sleep(5)
+    new_height = driver.execute_script("return document.body.scrollHeight")
+    if last_height == new_height:
+        reached_page_end = True
+    else:
+        last_height = new_height
+
 items = driver.find_elements(By.CLASS_NAME, "wineCard__wineCard--2dj2T")
 # print(items)
 wines = [['Name', 'Region', 'Price',  'Rating']]
