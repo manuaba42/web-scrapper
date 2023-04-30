@@ -32,9 +32,9 @@ reached_page_end = False
 last_height = driver.execute_script("return document.body.scrollHeight")
 
 while not reached_page_end:
-    driver.execute_script("window.scrollBy(0, 4000);")
+    driver.execute_script("window.scrollBy(0, 10000);")
 
-    time.sleep(5)
+    time.sleep(3)
     new_height = driver.execute_script("return document.body.scrollHeight")
     if last_height == new_height:
         reached_page_end = True
@@ -52,9 +52,10 @@ for item in items:
     prices = item.find_element(By.CSS_SELECTOR, "div[class='addToCartButton__price--qJdh4'] div:nth-child(2)").text
     rating = (item.find_element(By.CLASS_NAME,'vivinoRating_averageValue__uDdPM').text)
 
-    wine = [name, region, prices, rating]
+    if float(rating) >= 3.7:
+        wine = [name, region, prices, rating]
 
-    wines.append(wine)
+        wines.append(wine)
 
 print(tabulate(wines))
 
